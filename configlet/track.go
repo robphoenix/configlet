@@ -1,6 +1,7 @@
 package configlet
 
 import (
+	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"os"
@@ -53,7 +54,14 @@ func (t Track) Config() (Config, error) {
 
 // HasValidConfig lints the JSON file.
 func (t Track) HasValidConfig() bool {
-	_, err := t.Config()
+
+	c, err := t.Config()
+	// re-marshall json with 2 space indent
+	b, err := json.MarshalIndent(c, "", "  ")
+	if err != nil {
+		fmt.Println("error:", err)
+	}
+	fmt.Printf("b = %+v\n", string(b))
 	return err == nil
 }
 

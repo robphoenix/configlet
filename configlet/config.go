@@ -9,23 +9,28 @@ import (
 // Config is an Exercism track configuration.
 type Config struct {
 	path            string
-	Slug            string
-	Language        string
-	Active          bool
-	Repository      string
-	Exercises       []Exercise
+	Active          bool `json:"active"`
 	Deprecated      []string
-	Foregone        []string
-	SolutionPattern string `json:"solution_pattern"`
+	Exercises       []Exercise `json:"exercises"`
+	Foregone        []string   `json:"foregone"`
+	IgnorePattern   string     `json:"ignore_pattern"`
+	Language        string     `json:"language"`
+	Repository      string     `json:"repository"`
+	Slug            string     `json:"slug"`
+	SolutionPattern string     `json:"solution_pattern"`
 }
 
 // Exercise configures metadata about an implemented exercise.
 // It's listed in the config in the order that the exercise will be
 // delivered by the API.
 type Exercise struct {
-	Slug       string
-	Difficulty int
-	Topics     []string
+	Core       bool        `json:"core,omitempty"`
+	Deprecated bool        `json:"deprecated,omitempty"`
+	Difficulty int         `json:"difficulty,omitempty"`
+	Topics     []string    `json:"topics,omitempty"`
+	UnlockedBy interface{} `json:"unlocked_by,omitempty"`
+	UUID       string      `json:"uuid"`
+	Slug       string      `json:"slug"`
 }
 
 // Load loads an Exercism track configuration.
